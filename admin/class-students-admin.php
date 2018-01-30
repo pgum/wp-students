@@ -114,7 +114,7 @@ class Students_Admin {
 }
 public function display_options_page_main(){
 	include_once 'partials/students-admin-display.php';
-};
+}
 	public function ajax_update_player_field(){
 		global $wpdb;
 		$sid= $_POST['student_id'];

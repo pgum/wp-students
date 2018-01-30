@@ -161,7 +161,7 @@ class Students_Public {
       </fieldset>
       <fieldset>
         <div class="students-form-submit">
-          <input type="submit" name="submit" class="button" value="Register for On-Line Teaching!">
+          <input type="submit" name="submit" class="button" value="Register your trip!">
         </div>
       </fieldset>
     </form>';
@@ -227,7 +227,7 @@ public function post_register_data(){
 		$wpdb->insert("{$wpdb->prefix}students", $dataToInsert);
 	//}
 	if($validation_result['suc'] == 1) wp_safe_redirect(add_query_arg( $validation_result, home_url('/students')));
-	wp_safe_redirect(add_query_arg( $validation_result, home_url('/register_your_stay')));
+	wp_safe_redirect(add_query_arg( $validation_result, home_url('/register-your-stay')));
 	exit;
 }
 }

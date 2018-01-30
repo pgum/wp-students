@@ -180,7 +180,7 @@ class Students {
 		$this->loader->add_action('admin_post_students_register', $plugin_public, 'post_register_data' );
 	}
 	private function define_shortcodes(){
-		$plugin_public = new Dojang_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Students_Public( $this->get_plugin_name(), $this->get_version() );
 		add_shortcode('students-register-form', array($plugin_public, 'renderRegisterForm'));
 		add_shortcode('students-current', array($plugin_public, 'renderCurrentStudents'));
 		add_shortcode('students-former', array($plugin_public, 'renderFormerStudents'));

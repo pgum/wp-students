@@ -12,7 +12,7 @@
  * @subpackage Students/admin/partials
  */
   global $wpdb;
-  $studentsToApprove= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 0")
+  $studentsToApprove= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 0");
   $html='<h3><span class="dashicons dashicons-flag"></span>Students Entries to Approve</h3>';
   $html.='<table class="students-table-to-approve">
           <thead><th>#</th><th>Player Photo</th><th>Player Details</th><th>Approve</th><th>Reject</th></thead><tbody>';
@@ -36,7 +36,7 @@
   $html.='</tbody></table>';
   echo $html;
 
-  $students= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 1")
+  $students= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 1");
   $html='<h3><span class="dashicons dashicons-flag"></span>Students Entries For Edit</h3>';
   $html.='<table class="students-table-editable">
           <thead><th>#</th><th>Player Photo</th><th>Students Details</th></thead><tbody>';
