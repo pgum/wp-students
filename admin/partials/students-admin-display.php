@@ -17,7 +17,7 @@
   $html.='<table class="students-table-to-approve">
           <thead><th>#</th><th>Player Photo</th><th>Player Details</th><th>Approve</th><th>Reject</th></thead><tbody>';
   $i=1;
-  foreach($studentsToApprove as $student){
+  foreach($studentsToApprove as $studentData){
     $html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
     $html.='<td>'.$i.'</td>';
     $html.='<td class="students-photo-cell"><img class="students-photo" src="'.$studentData->stuPhoto.'"></td>';
@@ -27,18 +27,18 @@
                                       Year of Birth: '.$studentData->stuBirth.'<br/>
                                       Rank: '.$studentData->stuRank.'<br/>
                                       Trip Duration: '.$studentData->stuTripDuration.'<br/>
+                                      Text:<br/>'.$studentData->stuText.'<br/>
                                       Gossip: <span class="students-gossip">'.$studentData->stuGossip.'</span></div></td>';
-    $html.='<td>'.'<a href="#" class="button secondary students-approve-result" x-student-id="'.$student->stuId.'">Approve Game</a>'.'</td>';
-    $html.='<td>'.'<a href="#" class="button button-red students-remove-result" x-student-id="'.$student->stuId.'">Reject Game</a>'.'</td>';
+    $html.='<td><a href="#" class="button secondary students-approve-player" x-student-id="'.$studentData->stuId.'">Approve Student</a></td>';
+    $html.='<td><a href="#" class="button button-red students-remove-player" x-student-id="'.$studentData->stuId.'">Reject Student</a></td>';
     $html.='</tr>';
     $i++;
   }
   $html.='</tbody></table>';
   echo $html;
-  $
   $students= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 1");
   $html='<h3><span class="dashicons dashicons-flag"></span>Students Entries For Edit</h3>';
-  $html.='<table class="students-table-editable">
+  $html.='<table class="students-table">
           <thead><th>#</th><th>Player Photo</th><th>Students Details</th></thead><tbody>';
   $i=1;
   foreach($students as $studentData){
@@ -54,6 +54,7 @@
               Year of Birth: <span class="students-editable" x-field="stuBirth" x-student-id="'.$studentData->stuId.'">'.$studentData->stuBirth.'&nbsp;</span><br/>
               Rank: <span class="students-editable" x-field="stuRank" x-student-id="'.$studentData->stuId.'">'.$studentData->stuRank.'&nbsp;</span><br/>
               Trip Duration: <span class="students-editable" x-field="stuTripDuration" x-student-id="'.$studentData->stuId.'">'.$studentData->stuTripDuration.'&nbsp;</span><br/>
+              Text:<br/><span class="students-editable" x-field="stuText" x-student-id="'.$studentData->stuId.'">'.$studentData->stuText.'</span><br/>
               Gossip: <span class="students-editable x-field="stuGossip" x-student-id="'.$studentData->stuId.'">'.$studentData->stuGossip.'&nbsp;</span></span></div></td>';
     $html.='</tr>';
     $i++;

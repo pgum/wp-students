@@ -30,24 +30,59 @@
 	 */
 	 /*AJAX on click events to approve and remove pending players*/
 	 $(function(){
-	 	$('students-approve-player').on('click', function(){
+	 	$('.students-approve-player').on('click', function(){
 	 		var studentId= $(this).attr('x-student-id');
+			console.log('kurwa1');
 	 		$.post({
 	 			url: ajaxurl,
-	 			data: {'action': 'student_approve', 'student_id': studentId},
-	 			success: function(data){ console.log(data); $('#students-id-'+playerId).fadeOut(800, function(){$(this).remove();});}
+	 			data: {'action': 'students_approve', 'student_id': studentId},
+	 			success: function(data){ console.log(data); $('#students-id-'+studentId).fadeOut(800, function(){$(this).remove();});}
 	 		});
 	 	});
 	 	$('.students-remove-player').on('click', function(){
+			console.log('kurwa2');
 	 		var choice= confirm("Are you sure you want to remove pending student data?\n(Students will have to register again)");
 	 		if(choice){
 	 			var studentId= $(this).attr('x-student-id');
 	 			$.post({
 	 				url: ajaxurl,
-	 				data: {'action': 'student_rejectr', 'student_id': studentId},
-		 			success: function(data){ console.log(data); $('#students-id-'+playerId).fadeOut(800, function(){$(this).remove();});}
+	 				data: {'action': 'students_reject', 'student_id': studentId},
+		 			success: function(data){ console.log(data); $('#students-id-'+studentId).fadeOut(800, function(){$(this).remove();});}
 	 			});
 	 		}
 	 	});
 	 });
+	 /*Table editable cell UI and ajax call on button OK click*/
+
+	$(function(){
+		$('.students-editable').each(function(){
+			var editedCell= $(this);
+			$(this).on('click', '.students-update-btn', function(){
+				//var inputVal = $(this).prev('input').val();
+				var inputVal = $(this).parent().children('input').val();
+				var fieldName= $(this).attr('x-field');
+				var studentId= $(this).attr('x-student-id');
+			$.post({
+				url: ajaxurl,
+				data: {'action': 'students_update', 'student_id': studentId, 'field': fieldName, 'value': inputVal},
+				success: function(data){
+					console.log(data);
+					editedCell.addClass('students-cell-updated').delay(2000).queue(function(){ $(this).removeClass('students-cell-updated').dequeue(); });}
+			});
+				$(this).parent()
+				.removeClass('students-editable-e')
+				.addClass('students-editable')
+				.html(inputVal);
+			});
+			$(this).on('click', '.students-editable', function(){
+				var cellValue= $(this).text();
+				var fieldName= $(this).attr('x-field');
+				var studentId= $(this).parents('tr').attr('x-student-id');
+				$(this)
+				.removeClass('dojang-editable')
+				.addClass('dojang-editable-e')
+				.html('<input class="students-input" value="'+cellValue+'"/><a href="#sid-'+studentsId+'" class="students-update-btn button button-secondary" x-student-id="'+studentId+'" x-field="'+fieldName+'">OK</a>');
+			});
+		});
+	});
 })( jQuery );

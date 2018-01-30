@@ -124,7 +124,16 @@ public function display_options_page_main(){
 		echo 'Im gunna update student ('.$sid.') field '.$field.' to value '.$value;
 		wp_die();
 	}
-public function ajax_approve(){
+public function ajax_update(){
+		global $wpdb;
+		$sid= $_POST['student_id'];
+		$field= $_POST['field'];
+		$value= $_POST['value'];
+		$wpdb->update("{$wpdb->prefix}students", array($field => $value), array('stuId' => $sid));
+		echo 'Ajax Updated '.$field.' with value '.$value.' for student '.$sid;
+		wp_die();
+}
+	public function ajax_approve(){
 	global $wpdb;
 	$sid= $_POST['student_id'];
 	$wpdb->update("{$wpdb->prefix}students", array('isApproved' => 1), array('stuId' => $sid));

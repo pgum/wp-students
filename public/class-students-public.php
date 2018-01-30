@@ -124,7 +124,7 @@ class Students_Public {
     $prev_country =isset($_GET['prev-country'])? $_GET['prev-country'] : "";
     $prev_birth     =isset($_GET['prev-birth'])? $_GET['prev-birth'] : "";
     $prev_duration=isset($_GET['prev-duration'])? $_GET['prev-duration'] : "";
-		if($_GET['suc'] == 0) $html.= $this->renderStudentNotSubmittedNotice();
+		if(isset($_GET['suc']) && $_GET['suc'] == 0) $html.= $this->renderStudentNotSubmittedNotice();
     $html.= '<h3 class="students-register">Registration Form</h3>';
     $html.= '<p>Please fill out form below. All fields marked with <span class="students-required">*</span> are required for your form to be submitted.</p>';
     $html.='<form class="students-register-form" action="'.get_admin_url().'admin-post.php" method="post">
@@ -170,12 +170,13 @@ class Students_Public {
 private function renderStudent($studentData){
 	$html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
 	$html.='<td class="students-photo-cell"><img class="students-photo" src="'.$studentData->stuPhoto.'"></td>';
-	$html.='<td><h2 class="students-name">'.$studentData->stuName.'</h2>';
+	$html.='<td><h5 class="students-name">'.$studentData->stuName.'</h5>';
 	$html.='<div class="students-card">KGS: '.$studentData->stuKgs.'<br/>
 																		 Country: '.$studentData->stuCountry.'<br/>
 																		 Year of Birth: '.$studentData->stuBirth.'<br/>
 																		 Rank: '.$studentData->stuRank.'<br/>
 																		 Trip Duration: '.$studentData->stuTripDuration.'<br/>
+																		 Text:<br/>'.$studentData->stuText.'<br/>
 																		 Gossip: <span class="students-gossip">'.$studentData->stuGossip.'</span></div></td>';
 	$html.='</tr>';
 	return $html;
@@ -199,11 +200,11 @@ private function renderStudentsTable($current){
 public function renderCurrentStudents(){
 	if($_GET['suc'] == 1) $html.= $this->renderStudentSubmittedNotice();
 	$html.='<h3 class="students-header" x-current="1">Current Students in Korea</h3>';
-	return $this->renderStudentsTable(1);
+	return $html.$this->renderStudentsTable(1);
 }
 public function renderFormerStudents(){
 	$html.='<h3 class="students-header" x-current="0">Former BIBA Students</h3>';
-	return $this->renderStudentsTable(0);
+	return $html.$this->renderStudentsTable(0);
 }
 public function post_register_data(){
 	//$validation_result= $this->validate_post_register($_POST);
@@ -226,8 +227,8 @@ public function post_register_data(){
 													'isApproved' => 0);
 		$wpdb->insert("{$wpdb->prefix}students", $dataToInsert);
 	//}
-	if($validation_result['suc'] == 1) wp_safe_redirect(add_query_arg( $validation_result, home_url('/students')));
-	wp_safe_redirect(add_query_arg( $validation_result, home_url('/register-your-stay')));
+	$page = ($validation_result['suc'] == 1) ? '/students' : 'register-your-stay';
+	wp_safe_redirect(add_query_arg( $validation_result, home_url($page)));
 	exit;
 }
 }

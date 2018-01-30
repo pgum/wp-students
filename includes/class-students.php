@@ -157,8 +157,9 @@ class Students {
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action('admin_menu', $plugin_admin, 'add_options_page'); //done
-		$this->loader->add_action('wp_ajax_student_approve', $plugin_admin, 'ajax_approve' );//
-		$this->loader->add_action('wp_ajax_student_reject', $plugin_admin, 'ajax_reject' );//
+		$this->loader->add_action('wp_ajax_students_update', $plugin_admin, 'ajax_update' );//
+		$this->loader->add_action('wp_ajax_students_approve', $plugin_admin, 'ajax_approve' );//
+		$this->loader->add_action('wp_ajax_students_reject', $plugin_admin, 'ajax_reject' );//
 
 	}
 

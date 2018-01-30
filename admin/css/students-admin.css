@@ -6,13 +6,13 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.students-group-table, .students-table-to-approve, .students-player-list { border-collapse: collapse; }
-.students-group-table tbody td, .students-player-list tbody td{
+.students-table, .students-table-to-approve, .students-player-list { border-collapse: collapse; }
+.students-table tbody td{
   border: 1px black solid;
   min-width: 30px;
   padding: 3px;
 }
-.students-group-table thead th, .students-player-list thead th{
+.students-table thead th{
   border: 1px black solid;
   min-width: 30px;
   background: lightgray;
