@@ -124,7 +124,6 @@ class Students_Public {
     $prev_country =isset($_GET['prev-country'])? $_GET['prev-country'] : "";
     $prev_birth     =isset($_GET['prev-birth'])? $_GET['prev-birth'] : "";
     $prev_duration=isset($_GET['prev-duration'])? $_GET['prev-duration'] : "";
-		if($_GET['suc'] == 1) $html.= $this->renderStudentSubmittedNotice();
 		if($_GET['suc'] == 0) $html.= $this->renderStudentNotSubmittedNotice();
     $html.= '<h3 class="students-register">Registration Form</h3>';
     $html.= '<p>Please fill out form below. All fields marked with <span class="students-required">*</span> are required for your form to be submitted.</p>';
@@ -198,6 +197,7 @@ private function renderStudentsTable($current){
 	return $html;
 }
 public function renderCurrentStudents(){
+	if($_GET['suc'] == 1) $html.= $this->renderStudentSubmittedNotice();
 	$html.='<h3 class="students-header" x-current="1">Current Students in Korea</h3>';
 	return $this->renderStudentsTable(1);
 }
@@ -226,7 +226,8 @@ public function post_register_data(){
 													'isApproved' => 0);
 		$wpdb->insert("{$wpdb->prefix}students", $dataToInsert);
 	//}
-	wp_safe_redirect(add_query_arg( $validation_result, home_url('/students'))); //TODO: proper home url
+	if($validation_result['suc'] == 1) wp_safe_redirect(add_query_arg( $validation_result, home_url('/students')));
+	wp_safe_redirect(add_query_arg( $validation_result, home_url('/register_your_stay')));
 	exit;
 }
 }
