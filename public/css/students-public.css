@@ -2,3 +2,36 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+h3.students-register:before {font-family: 'dashicons'; content: '\f118';}
+h3.students-results-archive {cursor: pointer;}
+h3.students-results-archive:before {font-family: 'dashicons'; content: '\f314';}
+h3.students-results:before {font-family: 'dashicons'; content: '\f314';}
+h3.students-players:before {font-family: 'dashicons'; content: '\f307';}
+h3.students-scoreboard:before {font-family: 'dashicons'; content: '\f154';}
+h3.students-submit:before {font-family: 'dashicons'; content: '\f157';}
+
+.students-table thead th {
+  background: #00387d;
+  font-weight: bold;
+  color: white;
+}
+/*Registration Notices*/
+.students-notice {border: 1px solid black}
+.students-notice div {margin: 5px;}
+.students-required {color: red;}
+h3.students-ok:before {font-family: 'dashicons'; content: '\f147';}
+h3.students-nok:before {font-family: 'dashicons'; content: '\f158';}
+h3.students-ok {color: green;}
+h3.students-nok {color: red;}
+h3.students-collapse:after {font-family: 'dashicons'; content: '\f506'; margin-left:10px;}
+h3.students-expand:after {font-family: 'dashicons'; content: '\f211'; margin-left:10px;}
+.students-hidden {display:none;}
+.students-eligable {background: chartreuse;}
+/*Results table place highlight*/
+.students-place-1 { background: #ffd700; }
+.students-place-2 { background: #c0c0c0; }
+.students-place-3 { background: #cd7f32; }

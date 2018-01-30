@@ -2,3 +2,103 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+.students-group-table, .students-table-to-approve, .students-player-list { border-collapse: collapse; }
+.students-group-table tbody td, .students-player-list tbody td{
+  border: 1px black solid;
+  min-width: 30px;
+  padding: 3px;
+}
+.students-group-table thead th, .students-player-list thead th{
+  border: 1px black solid;
+  min-width: 30px;
+  background: lightgray;
+  padding: 3px;
+}
+/*Result Table Cell Styles*/
+.students-result-not-approved{ background: yellow; }
+.students-result-own{ background: gray; }
+.students-result-highlight {
+  background: #00b9eb !important;
+  animation:highlight-pulse-animation 2s;
+  -moz-animation:highlight-pulse-animation 2s infinite; /* Firefox */
+  -webkit-animation:highlight-pulse-animation 2s infinite; /* Safari and Chrome */
+}
+.students-updated{
+  animation:update-pulse-animation 2s;
+  -moz-animation:update-pulse-animation 2s; /* Firefox */
+  -webkit-animation:update-pulse-animation 2s; /* Safari and Chrome */
+
+}
+.students-league-properties { border: 1px solid black; }
+.students-league-info::after {  content: '\A'; }
+.students-editable{ background: #d5d5d5; }
+.students-editable span{
+  width:100%;
+  height:100%;
+  display: inline-block;
+}
+.students-update-btn { padding: 0 3px 1px; }
+.students-input { width: 70px; }
+.students-league-points-input{ width: 64px; }
+a.students-anchor{
+  display: block;
+  position: relative;
+  /*TODO: set this to proper value by hand later*/
+  top: -80px;
+  visibility: hidden;
+}
+/*Animations*/
+@-moz-keyframes highlight-pulse-animation /* Firefox */
+{
+0%   {background: yellow;}
+50%  {background: #00b9eb;}
+100% {background: yellow;}
+}
+
+@-webkit-keyframes highlight-pulse-animation /* Safari and Chrome */
+{
+0%   {background: yellow;}
+50%  {background: #00b9eb;}
+100% {background: yellow;}
+}
+
+@-moz-keyframes update-pulse-animation /* Firefox */
+{
+0%   {background: chartreuse;}
+50%  {background: green;}
+100% {background: lightgray;}
+}
+
+@-webkit-keyframes update-pulse-animation /* Safari and Chrome */
+{
+0%   {background: chartreuse;}
+50%  {background: green;}
+100% {background: lightgray;}
+}
+
+h3.students-collapse:after {font-family: 'dashicons'; content: '\f506'; margin-left:10px;}
+h3.students-expand:after {font-family: 'dashicons'; content: '\f211'; margin-left:10px;}
+.students-hidden {display:none;}
+h3.students-results-archive {cursor: pointer;}
+
+/*Games and Players to Approve Tables*/
+.students-table-to-approve tbody td{
+  border: 1px black solid;
+  min-width: 30px;
+  padding: 3px;
+}
+.students-table-to-approve thead th{
+  border: 1px black solid;
+  min-width: 30px;
+  background: lightgray;
+  padding: 3px;
+}
+.students-result-to-approve-winner { font-weight: bold; }
+/*Results table place highlight*/
+.students-place-1 { background: #ffd700; }
+.students-place-2 { background: #c0c0c0; }
+.students-place-3 { background: #cd7f32; }
