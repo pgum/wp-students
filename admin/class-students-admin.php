@@ -99,5 +99,43 @@ class Students_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/students-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+	public function add_options_page() {
+		//Top level settings page
+		$this->plugin_screen_hook_suffix = add_menu_page(
+			__( 'Students Comments', 'students' ),
+			__( 'Students Comments', 'students' ),
+			'manage_options',
+			$this->plugin_name,
+			array( $this, 'display_options_page_main' ),
+			'dashicons-id',
+			8
+		);
 
+}
+public function display_options_page_main(){
+	include_once 'partials/students-admin-display.php';
+};
+	public function ajax_update_player_field(){
+		global $wpdb;
+		$sid= $_POST['student_id'];
+		$field= $_POST['field'];
+		$value= $_POST['value'];
+		$wpdb->update("{$wpdb->prefix}students", array($field => $value), array('stuId' => $sid));
+		echo 'Im gunna update student ('.$sid.') field '.$field.' to value '.$value;
+		wp_die();
+	}
+public function ajax_approve(){
+	global $wpdb;
+	$sid= $_POST['student_id'];
+	$wpdb->update("{$wpdb->prefix}students", array('isApproved' => 1), array('stuId' => $sid));
+	echo 'Ajax Approve Player Id= '.$sid;
+	wp_die();
+}
+public function ajax_reject(){
+	global $wpdb;
+	$sid= $_POST['student_id'];
+	$wpdb->delete("{$wpdb->prefix}students", array('stuId' => $sid));
+	echo 'Ajax Remove Player Id= '.$sid;
+	wp_die();
+}
 }

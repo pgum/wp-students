@@ -28,5 +28,26 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-
+	 /*AJAX on click events to approve and remove pending players*/
+	 $(function(){
+	 	$('students-approve-player').on('click', function(){
+	 		var studentId= $(this).attr('x-student-id');
+	 		$.post({
+	 			url: ajaxurl,
+	 			data: {'action': 'student_approve', 'student_id': studentId},
+	 			success: function(data){ console.log(data); $('#students-id-'+playerId).fadeOut(800, function(){$(this).remove();});}
+	 		});
+	 	});
+	 	$('.students-remove-player').on('click', function(){
+	 		var choice= confirm("Are you sure you want to remove pending student data?\n(Students will have to register again)");
+	 		if(choice){
+	 			var studentId= $(this).attr('x-student-id');
+	 			$.post({
+	 				url: ajaxurl,
+	 				data: {'action': 'student_rejectr', 'student_id': studentId},
+		 			success: function(data){ console.log(data); $('#students-id-'+playerId).fadeOut(800, function(){$(this).remove();});}
+	 			});
+	 		}
+	 	});
+	 });
 })( jQuery );
