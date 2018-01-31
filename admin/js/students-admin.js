@@ -55,12 +55,18 @@
 	 /*Table editable cell UI and ajax call on button OK click*/
 
 	$(function(){
-		$('.students-editable').each(function(){
+		$('.students-editable-f').each(function(){
 			var editedCell= $(this);
+			//dynamic update button
 			$(this).on('click', '.students-update-btn', function(){
 				//var inputVal = $(this).prev('input').val();
-				var inputVal = $(this).parent().children('input').val();
 				var fieldName= $(this).attr('x-field');
+				var inputVal;
+				if(fieldName != 'stuText'){
+					var inputVal = $(this).parent().children('input').val();
+				}else{
+					var inputVal = $(this).parent().children('textarea').val();
+				}
 				var studentId= $(this).attr('x-student-id');
 			$.post({
 				url: ajaxurl,
@@ -74,14 +80,18 @@
 				.addClass('students-editable')
 				.html(inputVal);
 			});
+			//click to create input and button
 			$(this).on('click', '.students-editable', function(){
 				var cellValue= $(this).text();
 				var fieldName= $(this).attr('x-field');
-				var studentId= $(this).parents('tr').attr('x-student-id');
-				$(this)
-				.removeClass('dojang-editable')
-				.addClass('dojang-editable-e')
-				.html('<input class="students-input" value="'+cellValue+'"/><a href="#sid-'+studentsId+'" class="students-update-btn button button-secondary" x-student-id="'+studentId+'" x-field="'+fieldName+'">OK</a>');
+				var studentId= $(this).attr('x-student-id');
+				if(fieldName != 'stuText'){
+	$(this).removeClass('students-editable').addClass('students-editable-e')
+.html('<input class="students-input" value="'+cellValue+'"/><a href="#sid-'+studentId+'" class="students-update-btn button button-secondary" x-student-id="'+studentId+'" x-field="'+fieldName+'">OK</a>');
+}else{
+	$(this).removeClass('students-editable').addClass('students-editable-e')
+.html('<textarea class="students-input">'+cellValue+'</textarea><a href="#sid-'+studentId+'" class="students-update-btn button button-secondary" x-student-id="'+studentId+'" x-field="'+fieldName+'">OK</a>');
+}
 			});
 		});
 	});
