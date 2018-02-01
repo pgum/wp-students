@@ -6,7 +6,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.students-table, .students-table-to-approve, .students-player-list { border-collapse: collapse; }
+.students-table, .students-table-to-approve, .students-player-list { border-collapse: collapse; width: 100%;}
 .students-table tbody td{
   border: 1px black solid;
   min-width: 30px;
@@ -41,6 +41,13 @@
   height:100%;
   display: inline-block;
 }
+.students-photo {
+max-width: 200px;
+}
+.students-table td{
+max-width: 200px;
+}
+
 .students-update-btn { padding: 0 3px 1px; }
 .students-input { width: 70px; }
 .students-league-points-input{ width: 64px; }

@@ -127,7 +127,7 @@ class Students_Public {
 		if(isset($_GET['suc']) && $_GET['suc'] == 0) $html.= $this->renderStudentNotSubmittedNotice();
     $html.= '<h3 class="students-register">Registration Form</h3>';
     $html.= '<p>Please fill out form below. All fields marked with <span class="students-required">*</span> are required for your form to be submitted.</p>';
-    $html.='<form class="students-register-form" action="'.get_admin_url().'admin-post.php" method="post">
+    $html.='<form class="students-register-form" action="'.get_admin_url().'admin-post.php" method="post" enctype="multipart/form-data">
       <input type="hidden" name="action" value="students_register" />
       <fieldset>
         <div class="students-form-label"><label for="students-player-state">Are you current students or former?<span class="students-required">*</span></label></div>
@@ -153,7 +153,7 @@ class Students_Public {
         <div class="students-form-label"><label for="students-player-country">Country <span class="students-required">*</span></label></div>
         <div class="students-form-input"><input name="students-player-country" type="text" value="'.$prev_country.'" placeholder="What country are you from"></div>
 
-        <div class="students-form-label"><label for="students-player-birth">Country <span class="students-required">*</span></label></div>
+        <div class="students-form-label"><label for="students-player-birth">Year of Birth <span class="students-required">*</span></label></div>
         <div class="students-form-input"><input name="students-player-birth" type="text" value="'.$prev_birth.'" placeholder="eg. 1980"></div>
 
         <div class="students-form-label"><label for="students-player-duration">Your Trip Duration</label></div>
@@ -169,7 +169,7 @@ class Students_Public {
 }
 private function renderStudent($studentData){
 	$html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
-	$html.='<td class="students-photo-cell"><img class="students-photo" src="'.$studentData->stuPhoto.'"></td>';
+	$html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
 	$html.='<td><h5 class="students-name">'.$studentData->stuName.'</h5>';
 	$html.='<div class="students-card">KGS: '.$studentData->stuKgs.'<br/>
 																		 Country: '.$studentData->stuCountry.'<br/>
@@ -207,15 +207,24 @@ public function renderFormerStudents(){
 	return $html.$this->renderStudentsTable(0);
 }
 public function post_register_data(){
+		// These files need to be included as dependencies when on the front end.
+	require_once( ABSPATH . 'wp-admin/includes/image.php' );
+	require_once( ABSPATH . 'wp-admin/includes/file.php' );
+	require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
 	//$validation_result= $this->validate_post_register($_POST);
 	//$data = $this->sanitizeUserData($_POST);
+	//print_r(array('data'=> $_POST,"files"=>$_FILES['students-player-photo']['name']));
+			//exit;
 	$validation_result=array('suc'=> 1);
 	$data=$_POST;
+	$uploadedImage= media_handle_upload('students-player-photo', 0);
+	if ( is_wp_error($uploadedImage)){ $uploadedImage=''; }
 	//if($validation_result['suc'] == 1){
 		global $wpdb;
 		$dataToInsert= array(	'stuId' => '',
 													'stuName' => $data['students-player-name'],
-													'stuPhoto' => '', //TODO: how to download binary file and save on wordpress and retrieve from DB...
+													'stuPhoto' => $uploadedImage,
 													'stuText' => $data['students-player-about'],
 													'stuBirth' => $data['students-player-birth'],
 													'stuTripDuration' => $data['students-player-duration'],

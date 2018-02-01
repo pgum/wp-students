@@ -17,10 +17,17 @@
   $html.='<table class="students-table-to-approve">
           <thead><th>#</th><th>Player Photo</th><th>Player Details</th><th>Approve</th><th>Reject</th></thead><tbody>';
   $i=1;
+  function renderStudentField($fieldText, $fieldName, $field){
+    $html.='<div class="students-editable-f">';
+    $html.= $fieldText.': <span class="students-editable" x-field="'.$fieldName.'">'.$field.'&nbsp;&nbsp;&nbsp;</span>';
+    $html.= '<span class="students-editable-e students-hidden" x-field="'.$fieldName.'"></span>';
+    $html.='<br/></div>';
+    return $html;
+  }
   foreach($studentsToApprove as $studentData){
     $html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
     $html.='<td>'.$i.'</td>';
-    $html.='<td class="students-photo-cell"><img class="students-photo" src="'.$studentData->stuPhoto.'"></td>';
+    $html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
     $html.='<td><h2 class="students-name">'.$studentData->stuName.'</h2>';
     $html.='<div class="students-card">KGS: '.$studentData->stuKgs.'<br/>
                                       Country: '.$studentData->stuCountry.'<br/>
@@ -38,24 +45,24 @@
   echo $html;
   $students= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 1");
   $html='<h3><span class="dashicons dashicons-flag"></span>Students Entries For Edit</h3>';
-  $html.='<table class="students-table">
+  $html.='<table class="students-table students-table-edit">
           <thead><th>#</th><th>Player Photo</th><th>Students Details</th></thead><tbody>';
   $i=1;
   foreach($students as $studentData){
     $isCurrent='Current';
     $html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
     $html.='<td>'.$i.'</td>';
-    $html.='<td class="students-photo-cell"><img class="students-photo" src="'.$studentData->stuPhoto.'"></td>';
+    $html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
     $html.='<td><h2 class="students-name-editable">'.$studentData->stuName.'</h2>';
-    $html.='<div class="students-card-editable">
-              <div class="students-editable-f">isCurrent: <span class="students-editable" x-field="isCurrent" x-student-id="'.$studentData->stuId.'">'.$studentData->isCurrent.'&nbsp;</span><br/></div>
-              <div class="students-editable-f">KGS: <span class="students-editable" x-field="stuKgs" x-student-id="'.$studentData->stuId.'">'.$studentData->stuKgs.'&nbsp;</span><br/></div>
-              <div class="students-editable-f">Country: <span class="students-editable" x-field="stuCountry" x-student-id="'.$studentData->stuId.'">'.$studentData->stuCountry.'&nbsp;</span><br/></div>
-              <div class="students-editable-f">Year of Birth: <span class="students-editable" x-field="stuBirth" x-student-id="'.$studentData->stuId.'">'.$studentData->stuBirth.'&nbsp;</span><br/></div>
-              <div class="students-editable-f">Rank: <span class="students-editable" x-field="stuRank" x-student-id="'.$studentData->stuId.'">'.$studentData->stuRank.'&nbsp;</span><br/></div>
-              <div class="students-editable-f">Trip Duration: <span class="students-editable" x-field="stuTripDuration" x-student-id="'.$studentData->stuId.'">'.$studentData->stuTripDuration.'&nbsp;</span><br/></div>
-              <div class="students-editable-f">Text:<br/><span class="students-editable" x-field="stuText" x-student-id="'.$studentData->stuId.'">'.$studentData->stuText.'&nbsp;</span><br/></div>
-              <div class="students-editable-f">Gossip: <span class="students-editable" x-field="stuGossip" x-student-id="'.$studentData->stuId.'">'.$studentData->stuGossip.'&nbsp;</span></span></div></div></td>';
+    $html.='<div class="students-card-editable" x-student-id="'.$studentData->stuId.'">';
+    $html.= renderStudentField('Status','isCurrent', $studentData->isCurrent);
+    $html.= renderStudentField('Kgs','stuKgs', $studentData->stuKgs);
+    $html.= renderStudentField('Country','stuCountry', $studentData->stuCountry);
+    $html.= renderStudentField('Date of Birth','stuBirth', $studentData->stuBirth);
+    $html.= renderStudentField('Rank','stuRank', $studentData->stuRank);
+    $html.= renderStudentField('Trip Duration','stuTripDuration', $studentData->stuTripDuration);
+    $html.= renderStudentField('About','stuText', $studentData->stuText);
+    $html.= renderStudentField('Gossip','stuGossip', $studentData->stuGossip);
     $html.='</tr>';
     $i++;
   }
