@@ -6,7 +6,7 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
-.students-table, .students-table-to-approve, .students-player-list { border-collapse: collapse; width: 100%;}
+.students-table, .students-table-to-approve, .students-player-list { border-collapse: collapse; width: 800px;}
 .students-table tbody td{
   border: 1px black solid;
   min-width: 30px;
@@ -17,6 +17,9 @@
   min-width: 30px;
   background: lightgray;
   padding: 3px;
+}
+.students-num{
+  width:30px;
 }
 /*Result Table Cell Styles*/
 .students-result-not-approved{ background: yellow; }
@@ -43,6 +46,9 @@
 }
 textarea.students-input {
     width: 100%;
+}
+.studets-photo-cell{
+  width:200px;
 }
 .students-photo {
 max-width: 200px;

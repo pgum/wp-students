@@ -21,13 +21,16 @@
 			var fieldName= $(this).attr('x-field');
 			var inputVal = $(this).parent().children('.students-input').val();
 			var studentId= $(this).attr('x-student-id');
+			var btnParent= $(this).parent();
+			var btnParentPrev= $(this).parent().prev();
 			console.log('OK button clicked: studentId:'+studentId+' fieldName:'+fieldName+' new value:'+inputVal);
 			$.post({ url: ajaxurl, data: {'action': 'students_update', 'student_id': studentId, 'field': fieldName, 'value': inputVal},
 				success: function(data){
 					//console.log(data);
-					$(this).parent().prev().removeClass('students-hidden').addClass('students-updated').text(inputVal);
-					$(this).parent().prev().delay(2000).queue(function(){ $(this).removeClass('students-updated').dequeue(); });
-					$(this).parent().addClass('students-hidden').text('');	console.log('done!');//}
+					btnParentPrev.removeClass('students-hidden').addClass('students-updated').text(inputVal);
+					btnParentPrev.delay(2000).queue(function(){ $(this).removeClass('students-updated').dequeue(); });
+					btnParent.addClass('students-hidden').text('');	console.log('done!');
+				}
 			});
 		});
 		//click to create input and button
@@ -37,7 +40,7 @@
 			var studentId= $(this).parents('.students-card-editable').attr('x-student-id');
 			//console.log('cellValue:'+cellValue+' fieldName:'+fieldName+' studentId:'+studentId);
 			var fieldRender= {
-				isCurrent:'<select class="students-input"><option value="0" '+(cellValue===1? '':'selected')+'>Former</option><option value="1" '+(cellValue===0? '':'selected')+'>Current</option></select>',
+				isCurrent:'<select class="students-input"><option value="0" '+(cellValue==0? 'selected': '')+'>Former</option><option value="1" '+(cellValue==1? 'selected': '')+'>Current</option></select>',
 				stuText:'<textarea class="students-input">'+cellValue+'</textarea>',
 				stuGossip:'<textarea class="students-input">'+cellValue+'</textarea>'	};
 			var fieldDefault= '<input class="students-input" value="'+cellValue+'"/>';

@@ -15,7 +15,7 @@
   $studentsToApprove= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 0");
   $html='<h3><span class="dashicons dashicons-flag"></span>Students Entries to Approve</h3>';
   $html.='<table class="students-table-to-approve">
-          <thead><th>#</th><th>Player Photo</th><th>Player Details</th><th>Approve</th><th>Reject</th></thead><tbody>';
+          <thead><th class="students-num">#</th><th>Player Photo</th><th>Player Details</th><th>Approve</th><th>Reject</th></thead><tbody>';
   $i=1;
   function renderStudentField($fieldText, $fieldName, $field){
     $html.='<div class="students-editable-f">';
@@ -26,7 +26,7 @@
   }
   foreach($studentsToApprove as $studentData){
     $html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
-    $html.='<td>'.$i.'</td>';
+    $html.='<td class="students-num">'.$i.'</td>';
     $html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
     $html.='<td><h2 class="students-name">'.$studentData->stuName.'</h2>';
     $html.='<div class="students-card">KGS: '.$studentData->stuKgs.'<br/>
@@ -51,7 +51,7 @@
   foreach($students as $studentData){
     $isCurrent='Current';
     $html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
-    $html.='<td>'.$i.'</td>';
+    $html.='<td class="students-num">'.$i.'</td>';
     $html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
     $html.='<td><h2 class="students-name-editable">'.$studentData->stuName.'</h2>';
     $html.='<div class="students-card-editable" x-student-id="'.$studentData->stuId.'">';
