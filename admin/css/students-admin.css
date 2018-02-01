@@ -41,6 +41,9 @@
   height:100%;
   display: inline-block;
 }
+textarea.students-input {
+    width: 100%;
+}
 .students-photo {
 max-width: 200px;
 }
