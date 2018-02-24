@@ -177,7 +177,12 @@ private function renderStudent($studentData){
 																		 Rank: '.$studentData->stuRank.'<br/>
 																		 Trip Duration: '.$studentData->stuTripDuration.'<br/>
 																		 Text:<br/>'.$studentData->stuText.'<br/>';
-																		 //Gossip: <span class="students-gossip">'.$studentData->stuGossip.'</span></div></td>';
+  if(isset($studentData->anotherTrip))
+    foreach($studentData->anotherTrip as $at){
+    	$html.='<hr><div class="students-card">Rank: '.$at->stuRank.'<br/>
+                                             Trip Duration: '.$at->stuTripDuration.'<br/>
+                                             Text:<br/>'.$at->stuText.'<br/>';
+    }
 	$html.='</tr>';
 	return $html;
 }
@@ -186,14 +191,24 @@ private function renderStudentsTableHeader(){
 }
 private function getStudents($current){
 	global $wpdb;
-	return $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved = 1 AND isCurrent = $current");
+  $firstTrips= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId= 0 AND isCurrent= $current", OBJECT_K);
+  $anotherTrips= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId != 0");
+  foreach($anotherTrips as $at){
+    if(!isset($firstTrips[$at->prevStuId]->anotherTrip))
+      $firstTrips[$at->prevStuId]->anotherTrip= array();
+    $at_data=array('stuRank' => $at->stuRank, 'stuTripDuration' => $at->stuTripDuration, 'stuText' => $at->stuText);
+    $firstTrips[$at->prevStuId]->anotherTrip[]= $at_data;
+  }
+  return $firstTrips;
 }
 private function renderStudentsTable($current){
 	$students= $this->getStudents($current);
 	$html.='<table class="students-table" x-current="'.$current.'">';
 	$this->renderStudentsTableHeader();
-	foreach($students as $student)
-		$html.= $this->renderStudent($student);
+	foreach($students as $student){
+
+    $html.= $this->renderStudent($student);
+  }
 	$html.='</table>';
 	return $html;
 }
