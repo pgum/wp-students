@@ -176,8 +176,8 @@ private function renderStudent($studentData){
 																		 Year of Birth: '.$studentData->stuBirth.'<br/>
 																		 Rank: '.$studentData->stuRank.'<br/>
 																		 Trip Duration: '.$studentData->stuTripDuration.'<br/>
-																		 Text:<br/>'.$studentData->stuText.'<br/>
-																		 Gossip: <span class="students-gossip">'.$studentData->stuGossip.'</span></div></td>';
+																		 Text:<br/>'.$studentData->stuText.'<br/>';
+																		 //Gossip: <span class="students-gossip">'.$studentData->stuGossip.'</span></div></td>';
 	$html.='</tr>';
 	return $html;
 }

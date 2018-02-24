@@ -34,8 +34,8 @@
                                       Year of Birth: '.$studentData->stuBirth.'<br/>
                                       Rank: '.$studentData->stuRank.'<br/>
                                       Trip Duration: '.$studentData->stuTripDuration.'<br/>
-                                      Text:<br/>'.$studentData->stuText.'<br/>
-                                      Gossip: <span class="students-gossip">'.$studentData->stuGossip.'</span></div></td>';
+                                      Text:<br/>'.$studentData->stuText.'<br/>';
+                                      //Gossip: <span class="students-gossip">'.$studentData->stuGossip.'</span></div></td>';
     $html.='<td><a href="#" class="button secondary students-approve-player" x-student-id="'.$studentData->stuId.'">Approve Student</a></td>';
     $html.='<td><a href="#" class="button button-red students-remove-player" x-student-id="'.$studentData->stuId.'">Reject Student</a></td>';
     $html.='</tr>';
