@@ -107,7 +107,7 @@ class Students_Public {
 private function renderStudent($studentData){
 	$html='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
 	$html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
-	$html.='<td><h5 class="students-name">'.$studentData->stuName.'</h5>';
+	$html.='<td><h4 class="students-name">'.$studentData->stuName.'</h4>';
 	$html.='<div class="students-card"><span class="students-card-field">KGS:</span> '.$studentData->stuKgs.'<br/>
 																		 Country:</span> '.$studentData->stuCountry.'<br/>
 																		 <span class="students-card-field">Year of Birth:</span> '.$studentData->stuBirth.'<br/>
