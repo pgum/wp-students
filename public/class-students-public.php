@@ -128,7 +128,7 @@ private function getStudents($current){
 	global $wpdb;
   $firstTrips= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId= 0 AND isCurrent= $current", OBJECT_K);
   foreach($firstTrips as $ft)
-    $ft->anotherTrip= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId = {$tf->stuId}");
+    $ft->anotherTrip= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId = {$ft->stuId}");
   print_r($firstTrips); //ver1.5 debug
   return $firstTrips;
 }
