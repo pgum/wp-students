@@ -115,9 +115,10 @@ private function renderStudent($studentData){
 																		 Trip Duration: '.$studentData->stuTripDuration.'<br/>
 																		 Text:<br/>'.$studentData->stuText.'<br/>';
   foreach($studentData->anotherTrip as $at)
-  	$html.='<hr><div class="students-card">Rank: '.$at->stuRank.'<br/>
-                                           Trip Duration: '.$at->stuTripDuration.'<br/>
-                                           Text:<br/>'.$at->stuText.'<br/>';
+    if(isset($at->stuText))
+      $html.='<hr><div class="students-card">Rank: '.$at->stuRank.'<br/>
+                                            Trip Duration: '.$at->stuTripDuration.'<br/>
+                                            Text:<br/>'.$at->stuText.'<br/>';
 	$html.='</tr>';
 	return $html;
 }
@@ -129,15 +130,13 @@ private function getStudents($current){
   $firstTrips= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId= 0 AND isCurrent= $current", OBJECT_K);
   foreach($firstTrips as $ft)
     $ft->anotherTrip= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId = {$ft->stuId}");
-  print_r($firstTrips); //ver1.5 debug
   return $firstTrips;
 }
 private function renderStudentsTable($current){
 	$students= $this->getStudents($current);
-	$html.='<table class="students-table" x-current="'.$current.'">';
+	$html='<table class="students-table" x-current="'.$current.'">';
 	$this->renderStudentsTableHeader();
 	foreach($students as $student){
-
     $html.= $this->renderStudent($student);
   }
 	$html.='</table>';
@@ -151,7 +150,7 @@ public function renderCurrentStudents(){
 	return $html.$this->renderStudentsTable(1);
 }
 public function renderFormerStudents(){
-	$html.='<h3 class="students-header" x-current="0">Former BIBA Students</h3>';
+	$html='<h3 class="students-header" x-current="0">Former BIBA Students</h3>';
 	return $html.$this->renderStudentsTable(0);
 }
 public function post_register_data(){
