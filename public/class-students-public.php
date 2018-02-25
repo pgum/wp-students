@@ -135,6 +135,7 @@ private function getStudents($current){
     $at_data=array('stuRank' => $at->stuRank, 'stuTripDuration' => $at->stuTripDuration, 'stuText' => $at->stuText);
     $firstTrips[$at->prevStuId]->anotherTrip[]= $at_data;
   }
+  print_r($firstTrips);
   return $firstTrips;
 }
 private function renderStudentsTable($current){
@@ -171,6 +172,7 @@ public function post_register_data(){
 			//exit;
 	$validation_result=array('suc'=> 1);
 	$data=$_POST;
+
 	$uploadedImage= media_handle_upload('students-player-photo', 0);
 	if ( is_wp_error($uploadedImage)){ $uploadedImage=''; }
 	//if($validation_result['suc'] == 1){
