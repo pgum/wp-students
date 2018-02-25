@@ -175,7 +175,9 @@ public function post_register_data(){
 	if ( is_wp_error($uploadedImage)){ $uploadedImage=''; }
 	//if($validation_result['suc'] == 1){
 		global $wpdb;
-		$dataToInsert= array(	'stuId' => '',
+    $prevStuId= $wpdb->get_var("SELECT stuId FROM {$wpdb->prefix}students WHERE stuName LIKE '".$data['students-player-name']."' AND stuBirth LIKE '".$data['students-player-birth']."' AND prevStuId= 0");
+    $prevStuId= $prevStuId == NULL ? '0' : $prevStuId;
+    $dataToInsert= array(	'stuId' => '',
 													'stuName' => $data['students-player-name'],
 													'stuPhoto' => $uploadedImage,
 													'stuText' => $data['students-player-about'],
@@ -185,6 +187,7 @@ public function post_register_data(){
 													'stuRank' => $data['students-player-rank'],
 													'stuCountry' => $data['students-player-country'],
 													'stuGossip' => '',
+                          'prevStuId' => $prevStuId,
 													'isCurrent' => $data['students-player-state'],
 													'isApproved' => 0);
 		$wpdb->insert("{$wpdb->prefix}students", $dataToInsert);
