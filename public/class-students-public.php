@@ -135,7 +135,7 @@ private function getStudents($current){
     $at_data=array('stuRank' => $at->stuRank, 'stuTripDuration' => $at->stuTripDuration, 'stuText' => $at->stuText);
     $firstTrips[$at->prevStuId]->anotherTrip[]= $at_data;
   }
-  print_r($firstTrips);
+  print_r($firstTrips); //ver1.5 debug
   return $firstTrips;
 }
 private function renderStudentsTable($current){
