@@ -149,7 +149,7 @@ private function renderStudentsTable($current){
 	return $html;
 }
 public function renderCurrentStudents(){
-  $html=''
+  $html='';
   if(isset($_GET['suc']))
     if($_GET['suc'] == 1) $html= $this->renderStudentSubmittedNotice();
 	$html.='<h3 class="students-header" x-current="1">Current Students in Korea</h3>';
