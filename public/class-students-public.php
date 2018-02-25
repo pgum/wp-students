@@ -108,17 +108,17 @@ private function renderStudent($studentData){
 	$html='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
 	$html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
 	$html.='<td><h5 class="students-name">'.$studentData->stuName.'</h5>';
-	$html.='<div class="students-card">KGS: '.$studentData->stuKgs.'<br/>
-																		 Country: '.$studentData->stuCountry.'<br/>
-																		 Year of Birth: '.$studentData->stuBirth.'<br/>
-																		 Rank: '.$studentData->stuRank.'<br/>
-																		 Trip Duration: '.$studentData->stuTripDuration.'<br/>
-																		 Text:<br/>'.$studentData->stuText.'<br/>';
+	$html.='<div class="students-card"><span class="students-card-field">KGS:</span> '.$studentData->stuKgs.'<br/>
+																		 Country:</span> '.$studentData->stuCountry.'<br/>
+																		 <span class="students-card-field">Year of Birth:</span> '.$studentData->stuBirth.'<br/>
+																		 <span class="students-card-field">Rank:</span> '.$studentData->stuRank.'<br/>
+																		 <span class="students-card-field">Trip Duration:</span> '.$studentData->stuTripDuration.'<br/>
+																		 <span class="students-card-field">Text:</span><br/>'.$studentData->stuText.'<br/>';
   foreach($studentData->anotherTrip as $at)
     if(isset($at->stuText))
-      $html.='<hr><div class="students-card">Rank: '.$at->stuRank.'<br/>
-                                            Trip Duration: '.$at->stuTripDuration.'<br/>
-                                            Text:<br/>'.$at->stuText.'<br/>';
+      $html.='<hr><div class="students-card"><span class="students-card-field">Rank:</span> '.$at->stuRank.'<br/>
+                                            <span class="students-card-field">Trip Duration:</span> '.$at->stuTripDuration.'<br/>
+                                            <span class="students-card-field">Text:</span><br/>'.$at->stuText.'<br/>';
 	$html.='</tr>';
 	return $html;
 }
