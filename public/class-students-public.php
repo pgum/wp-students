@@ -59,9 +59,11 @@ class Students_Public {
     $prev_country =isset($_GET['prev-country'])? $_GET['prev-country'] : "";
     $prev_birth     =isset($_GET['prev-birth'])? $_GET['prev-birth'] : "";
     $prev_duration=isset($_GET['prev-duration'])? $_GET['prev-duration'] : "";
-		if(isset($_GET['suc']) && $_GET['suc'] == 0) $html.= $this->renderStudentNotSubmittedNotice();
+    $html='';
+    if(isset($_GET['suc']) && $_GET['suc'] == 0) $html.= $this->renderStudentNotSubmittedNotice();
     $html.= '<h3 class="students-register">Registration Form</h3>';
     $html.= '<p>Please fill out form below. All fields marked with <span class="students-required">*</span> are required for your form to be submitted.</p>';
+    $html.= '<p>If it was your another trip, just make sure to fill in your name and year of birth as in firt trip!</p>';
     $html.='<form class="students-register-form" action="'.get_admin_url().'admin-post.php" method="post" enctype="multipart/form-data">
       <input type="hidden" name="action" value="students_register" />
       <fieldset>
@@ -103,7 +105,7 @@ class Students_Public {
     return $html;
 }
 private function renderStudent($studentData){
-	$html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
+	$html='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
 	$html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
 	$html.='<td><h5 class="students-name">'.$studentData->stuName.'</h5>';
 	$html.='<div class="students-card">KGS: '.$studentData->stuKgs.'<br/>
@@ -113,11 +115,10 @@ private function renderStudent($studentData){
 																		 Trip Duration: '.$studentData->stuTripDuration.'<br/>
 																		 Text:<br/>'.$studentData->stuText.'<br/>';
   if(isset($studentData->anotherTrip))
-    foreach($studentData->anotherTrip as $at){
+    foreach($studentData->anotherTrip as $at)
     	$html.='<hr><div class="students-card">Rank: '.$at->stuRank.'<br/>
                                              Trip Duration: '.$at->stuTripDuration.'<br/>
                                              Text:<br/>'.$at->stuText.'<br/>';
-    }
 	$html.='</tr>';
 	return $html;
 }
@@ -148,7 +149,9 @@ private function renderStudentsTable($current){
 	return $html;
 }
 public function renderCurrentStudents(){
-	if($_GET['suc'] == 1) $html.= $this->renderStudentSubmittedNotice();
+  $html=''
+  if(isset($_GET['suc']))
+    if($_GET['suc'] == 1) $html= $this->renderStudentSubmittedNotice();
 	$html.='<h3 class="students-header" x-current="1">Current Students in Korea</h3>';
 	return $html.$this->renderStudentsTable(1);
 }
