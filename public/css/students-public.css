@@ -37,3 +37,5 @@ h3.students-expand:after {font-family: 'dashicons'; content: '\f211'; margin-lef
 .students-place-1 { background: #ffd700; }
 .students-place-2 { background: #c0c0c0; }
 .students-place-3 { background: #cd7f32; }
+.students-card-field {font-weight: 600;}
+.students-table {width: 100%;}

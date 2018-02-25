@@ -17,8 +17,9 @@
   $html.='<table class="students-table-to-approve">
           <thead><th class="students-num">#</th><th>Player Photo</th><th>Player Details</th><th>Approve</th><th>Reject</th></thead><tbody>';
   $i=1;
+
   function renderStudentField($fieldText, $fieldName, $field){
-    $html.='<div class="students-editable-f">';
+    $html='<div class="students-editable-f">';
     $html.= $fieldText.': <span class="students-editable" x-field="'.$fieldName.'">'.$field.'&nbsp;&nbsp;&nbsp;</span>';
     $html.= '<span class="students-editable-e students-hidden" x-field="'.$fieldName.'"></span>';
     $html.='<br/></div>';
@@ -51,7 +52,7 @@
   foreach($students as $studentData){
     $isCurrent='Current';
     $html.='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
-    $html.='<td class="students-num">'.$i.'</td>';
+    $html.='<td class="students-num">'.$i.'/id: '.$studentData->stuId.'</td>';
     $html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
     $html.='<td><h2 class="students-name-editable">'.$studentData->stuName.'</h2>';
     $html.='<div class="students-card-editable" x-student-id="'.$studentData->stuId.'">';
@@ -62,7 +63,8 @@
     $html.= renderStudentField('Rank','stuRank', $studentData->stuRank);
     $html.= renderStudentField('Trip Duration','stuTripDuration', $studentData->stuTripDuration);
     $html.= renderStudentField('About','stuText', $studentData->stuText);
-    $html.= renderStudentField('Gossip','stuGossip', $studentData->stuGossip);
+    $html.= renderStudentField('Previous Trip Id','prevStuId', $studentData->prevStuId);
+    //$html.= renderStudentField('Gossip','stuGossip', $studentData->stuGossip);
     $html.='</tr>';
     $i++;
   }

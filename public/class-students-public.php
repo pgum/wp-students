@@ -108,17 +108,17 @@ private function renderStudent($studentData){
 	$html='<tr class="students-row" id="students-id-'.$studentData->stuId.'">';
 	$html.='<td class="students-photo-cell"><img class="students-photo" src="'.wp_get_attachment_url($studentData->stuPhoto).'"></td>';
 	$html.='<td><h5 class="students-name">'.$studentData->stuName.'</h5>';
-	$html.='<div class="students-card">KGS: '.$studentData->stuKgs.'<br/>
-																		 Country: '.$studentData->stuCountry.'<br/>
-																		 Year of Birth: '.$studentData->stuBirth.'<br/>
-																		 Rank: '.$studentData->stuRank.'<br/>
-																		 Trip Duration: '.$studentData->stuTripDuration.'<br/>
-																		 Text:<br/>'.$studentData->stuText.'<br/>';
-  if(isset($studentData->anotherTrip))
-    foreach($studentData->anotherTrip as $at)
-    	$html.='<hr><div class="students-card">Rank: '.$at->stuRank.'<br/>
-                                             Trip Duration: '.$at->stuTripDuration.'<br/>
-                                             Text:<br/>'.$at->stuText.'<br/>';
+	$html.='<div class="students-card"><span class="students-card-field">KGS:</span> '.$studentData->stuKgs.'<br/>
+																		 Country:</span> '.$studentData->stuCountry.'<br/>
+																		 <span class="students-card-field">Year of Birth:</span> '.$studentData->stuBirth.'<br/>
+																		 <span class="students-card-field">Rank:</span> '.$studentData->stuRank.'<br/>
+																		 <span class="students-card-field">Trip Duration:</span> '.$studentData->stuTripDuration.'<br/>
+																		 <span class="students-card-field">Text:</span><br/>'.$studentData->stuText.'<br/>';
+  foreach($studentData->anotherTrip as $at)
+    if(isset($at->stuText))
+      $html.='<hr><div class="students-card"><span class="students-card-field">Rank:</span> '.$at->stuRank.'<br/>
+                                            <span class="students-card-field">Trip Duration:</span> '.$at->stuTripDuration.'<br/>
+                                            <span class="students-card-field">Text:</span><br/>'.$at->stuText.'<br/>';
 	$html.='</tr>';
 	return $html;
 }
@@ -128,22 +128,15 @@ private function renderStudentsTableHeader(){
 private function getStudents($current){
 	global $wpdb;
   $firstTrips= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId= 0 AND isCurrent= $current", OBJECT_K);
-  $anotherTrips= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId != 0");
-  foreach($anotherTrips as $at){
-    if(!isset($firstTrips[$at->prevStuId]->anotherTrip))
-      $firstTrips[$at->prevStuId]->anotherTrip= array();
-    $at_data=array('stuRank' => $at->stuRank, 'stuTripDuration' => $at->stuTripDuration, 'stuText' => $at->stuText);
-    $firstTrips[$at->prevStuId]->anotherTrip[]= $at_data;
-  }
-  print_r($firstTrips);
+  foreach($firstTrips as $ft)
+    $ft->anotherTrip= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}students WHERE isApproved= 1 AND prevStuId = {$ft->stuId}");
   return $firstTrips;
 }
 private function renderStudentsTable($current){
 	$students= $this->getStudents($current);
-	$html.='<table class="students-table" x-current="'.$current.'">';
+	$html='<table class="students-table" x-current="'.$current.'">';
 	$this->renderStudentsTableHeader();
 	foreach($students as $student){
-
     $html.= $this->renderStudent($student);
   }
 	$html.='</table>';
@@ -157,7 +150,7 @@ public function renderCurrentStudents(){
 	return $html.$this->renderStudentsTable(1);
 }
 public function renderFormerStudents(){
-	$html.='<h3 class="students-header" x-current="0">Former BIBA Students</h3>';
+	$html='<h3 class="students-header" x-current="0">Former BIBA Students</h3>';
 	return $html.$this->renderStudentsTable(0);
 }
 public function post_register_data(){
